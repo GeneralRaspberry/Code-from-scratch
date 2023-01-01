@@ -1,5 +1,11 @@
-tauLeapG <- function(beta=100, # transmission rate
-                     theta=100, # dispersal scale
+#define beta and theta for later concatenation...
+
+be<-100
+th<-100
+
+
+tauLeapG <- function(beta=be, # transmission rate
+                     theta=th, # dispersal scale
                      inf.start=1, #number of initial infected
                      b=1, # kernel shape parameter, 1 for exponential
                      sigma=0, # asymptomatic period, used for outputting the time series
@@ -100,4 +106,6 @@ for (i in 1:length(temp)) {
   temp[[i]] <- current_output
 }
 
+
+final_output <- list(c(beta = be, theta = th, randmod = rlf), temp)
 

@@ -71,10 +71,16 @@ randselect<-sample(1:nrow(cds),floor(hosts*randmod),replace=F)
 cds[randselect,]<-apply(cds[randselect,],1,randfunction)
 
 landscape<-ppp(x=cds$xx,y=cds$yy,window=owin(xrange=c(0,dim),yrange=c(0,dim)))
-landscapestore<-data.frame(landscape)
-landscapestore
-}
 
+#Use instead if you want to plot landscapes
+#landscapestore<-data.frame(landscape)
+#landscapestore
+landscape
+}
+#define randmod for later...
+
+rlf<-0
+hosts<-1000
 # Use 4 cores to generate the landscapes in parallel
 cores <- availableCores()-2
 plan(multisession, workers=cores, seed=TRUE)
@@ -84,9 +90,12 @@ landscapes <- future_map(episet, generate_landscape,
                          #radiusCluster=50,
                          lambdaParent=.05,
                          lambdaDaughter=25,
-                         randmod=0,
-                         hosts=1000,
+                         randmod=r,
+                         hosts=hosts,
                          dim=1000,
                          .options = furrr_options(packages=c("spatstat", "furrr", "tidyverse")))
+plan(sequential)
 
-ggplot(landscapes[[1]])+geom_point(aes(x=x,y=y))
+#ggplot(landscapes[[1]])+geom_point(aes(x=x,y=y))
+
+
